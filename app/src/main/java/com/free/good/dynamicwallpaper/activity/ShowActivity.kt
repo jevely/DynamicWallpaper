@@ -1,5 +1,7 @@
 package com.free.good.dynamicwallpaper.activity
 
+import android.app.WallpaperManager
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -15,12 +17,16 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.flash.light.free.good.fashioncallflash.tool.ScreenTool
 import com.flash.light.free.good.fashioncallflash.util.SharedPreTool
+import com.flash.light.free.good.fashioncallflash.util.SharedPreTool.Companion.getInstance
 import com.flash.light.free.good.fashioncallflash.util.getScreen
 import com.free.good.dynamicwallpaper.DynamicApplication
 import com.free.good.dynamicwallpaper.R
+import com.free.good.dynamicwallpaper.db.DataBaseTool
 import com.free.good.dynamicwallpaper.db.ThemeContent
 import com.free.good.dynamicwallpaper.net.DownloadCallBack
 import com.free.good.dynamicwallpaper.net.NetTool
+import com.free.good.dynamicwallpaper.service.VideoLiveWallpaper
+import com.free.good.dynamicwallpaper.service.VideoLiveWallpaper2
 import com.free.good.dynamicwallpaper.tool.DataTool
 import com.free.good.dynamicwallpaper.util.Logger
 import com.free.good.dynamicwallpaper.view.CallThemeBackView
@@ -39,6 +45,8 @@ class ShowActivity : AppCompatActivity() {
     private lateinit var themeContent: ThemeContent
 
     private var isRequestWindowPermission = false
+
+    private var currentService = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,6 +96,21 @@ class ShowActivity : AppCompatActivity() {
         download_bt.setOnClickListener {
             startDownload()
         }
+
+        call_bt.setOnClickListener {
+            SharedPreTool.getInstance().putString(SharedPreTool.SELECT_THEME,themeContent.video_url!!)
+            if (getCurrentService() == MainActivity.SERCIVE_2) {
+                VideoLiveWallpaper.setToWallPaper(this)
+                currentService = MainActivity.SERCIVE_1
+            } else {
+                VideoLiveWallpaper2.setToWallPaper(this)
+                currentService = MainActivity.SERCIVE_2
+            }
+        }
+    }
+
+    private fun getCurrentService(): String {
+        return SharedPreTool.getInstance().getString(SharedPreTool.CURRENT_SERVICE)
     }
 
     val handler = object : Handler() {
@@ -150,6 +173,42 @@ class ShowActivity : AppCompatActivity() {
             e.printStackTrace()
         }
 
+    }
+
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == MainActivity.REQUEST_LIVE_PAPER) {
+            if (isLiveWallpaperChanged()) { // 记录到数据库,更新当前的Service
+                Logger.d("修改壁纸成功")
+                SharedPreTool.getInstance().putString(SharedPreTool.CURRENT_SERVICE, currentService)
+            }
+        }
+    }
+
+    /**
+     * 判断是否点击了更换了动态壁纸
+     *
+     * @return ture 关闭应用 false 只是返回到了选择界面
+     */
+    private fun isLiveWallpaperChanged(): Boolean {
+        val wallpaperManager =
+            WallpaperManager.getInstance(this@ShowActivity) // 得到壁纸管理器
+        val wallpaperInfo =
+            wallpaperManager.wallpaperInfo // 如果系统使用的壁纸是动态壁纸话则返回该动态壁纸的信息,否则会返回null
+        if (wallpaperInfo != null) { // 如果是动态壁纸,则得到该动态壁纸的包名,并与想知道的动态壁纸包名做比较
+            val currentLiveWallpaperPackageName = wallpaperInfo.packageName
+            val currentSerciceName = wallpaperInfo.serviceName
+            if (currentLiveWallpaperPackageName == packageName
+                && currentService == currentSerciceName
+            ) {
+                return true
+            }
+        }
+        return false
     }
 
 }

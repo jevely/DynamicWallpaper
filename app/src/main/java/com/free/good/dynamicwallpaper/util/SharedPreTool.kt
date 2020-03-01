@@ -28,6 +28,7 @@ class SharedPreTool private constructor() {
 
         const val START_COUNT = "START_COUNT"
         const val SELECT_THEME = "SELECT_THEME"
+        const val CURRENT_SERVICE = "CURRENT_SERVICE"
 
     }
 

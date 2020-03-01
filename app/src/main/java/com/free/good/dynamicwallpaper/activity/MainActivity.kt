@@ -14,6 +14,14 @@ import com.free.good.dynamicwallpaper.view.NewGridManager
 
 class MainActivity : AppCompatActivity(),View.OnClickListener {
 
+    companion object{
+        const val REQUEST_LIVE_PAPER = 777
+        val REQUEST_UPDATE_DURATION = 888
+        val REQUEST_UPDATE_SORT = 999
+        val SERCIVE_1 = "com.free.good.dynamicwallpaper.service.VideoLiveWallpaper"
+        val SERCIVE_2 = "com.free.good.dynamicwallpaper.service.VideoLiveWallpaper2"
+    }
+
     private lateinit var main_setting: ImageView
     private lateinit var main_recyclerview: RecyclerView
     private lateinit var adapter: MainAdapter

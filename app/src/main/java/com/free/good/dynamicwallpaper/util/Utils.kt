@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Point
 import android.net.Uri
 import android.os.Build
+import android.os.Environment
 import android.os.PowerManager
 import android.provider.Settings
 import android.view.KeyCharacterMap
@@ -27,12 +28,10 @@ fun getScreen(): Point {
 }
 
 //val saveFloadAddress =
-//    Environment.getExternalStorageDirectory().absolutePath + File.separator + WallpaperApplication.getContext().resources.getString(
-//        R.string.app_name
-//    ) + File.separator
+//    Environment.getExternalStorageDirectory().absolutePath + File.separator + "wallpaper" + File.separator
 
 val saveFloadAddress =
-    DynamicApplication.getContext().getFilesDir().getAbsolutePath() + File.separator + "calltheme" + File.separator
+    DynamicApplication.getContext().filesDir.absolutePath + File.separator + "wallpaper" + File.separator
 
 //本地读取图片
 fun getWallpaperFromLocal(path: String): Bitmap {
