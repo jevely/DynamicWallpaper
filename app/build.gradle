@@ -10,7 +10,7 @@ android {
     defaultConfig {
         applicationId "com.free.good.dynamicwallpaper"
         minSdkVersion 21
-        targetSdkVersion 22
+        targetSdkVersion 29
         versionCode 10000
         versionName "1.0.0"
         multiDexEnabled true

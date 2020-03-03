@@ -17,14 +17,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.flash.light.free.good.fashioncallflash.tool.ScreenTool
 import com.flash.light.free.good.fashioncallflash.util.SharedPreTool
-import com.flash.light.free.good.fashioncallflash.util.SharedPreTool.Companion.getInstance
 import com.flash.light.free.good.fashioncallflash.util.getScreen
 import com.free.good.dynamicwallpaper.DynamicApplication
 import com.free.good.dynamicwallpaper.R
-import com.free.good.dynamicwallpaper.db.DataBaseTool
 import com.free.good.dynamicwallpaper.db.ThemeContent
-import com.free.good.dynamicwallpaper.net.DownloadCallBack
-import com.free.good.dynamicwallpaper.net.NetTool
 import com.free.good.dynamicwallpaper.service.VideoLiveWallpaper
 import com.free.good.dynamicwallpaper.service.VideoLiveWallpaper2
 import com.free.good.dynamicwallpaper.tool.DataTool
@@ -40,7 +36,6 @@ class ShowActivity : AppCompatActivity() {
     private lateinit var download_bt: Button
     private var SET_REQUEST = 1
     private lateinit var call_load: RelativeLayout
-    private lateinit var downloadThread: Thread
 
     private lateinit var themeContent: ThemeContent
 
@@ -86,19 +81,8 @@ class ShowActivity : AppCompatActivity() {
             .centerCrop()
             .into(show_iv)
 
-        val url = SharedPreTool.getInstance().getString(SharedPreTool.SELECT_THEME)
-        if (TextUtils.equals(url, themeContent.video_url)) {
-            call_bt.text = resources.getString(R.string.theme_select)
-        }
-
-        startDownload()
-
-        download_bt.setOnClickListener {
-            startDownload()
-        }
-
         call_bt.setOnClickListener {
-            SharedPreTool.getInstance().putString(SharedPreTool.SELECT_THEME,themeContent.video_url!!)
+            SharedPreTool.getInstance().putString(SharedPreTool.SELECT_THEME,themeContent.video_name)
             if (getCurrentService() == MainActivity.SERCIVE_2) {
                 VideoLiveWallpaper.setToWallPaper(this)
                 currentService = MainActivity.SERCIVE_1
@@ -107,72 +91,13 @@ class ShowActivity : AppCompatActivity() {
                 currentService = MainActivity.SERCIVE_2
             }
         }
+
+        call_bt.visibility = View.VISIBLE
+        calltheme.show(themeContent.video_name, getScreen())
     }
 
     private fun getCurrentService(): String {
         return SharedPreTool.getInstance().getString(SharedPreTool.CURRENT_SERVICE)
-    }
-
-    val handler = object : Handler() {
-        override fun handleMessage(msg: Message) {
-            super.handleMessage(msg)
-            if (msg.what == 0) {
-                call_bt.visibility = View.VISIBLE
-                calltheme.show(msg.obj as String?, getScreen())
-            } else if (msg.what == 1) {
-                Toast.makeText(
-                    DynamicApplication.getContext(),
-                    "Download error",
-                    Toast.LENGTH_SHORT
-                ).show()
-                download_bt.visibility = View.VISIBLE
-            }
-            call_load.visibility = View.GONE
-        }
-    }
-
-    private fun startDownload() {
-        download_bt.visibility = View.GONE
-        call_load.visibility = View.VISIBLE
-        downloadThread = Thread(Runnable {
-            try {
-                NetTool.downloadWallPaper(
-                    themeContent.video_url,
-                    object : DownloadCallBack {
-                        override fun downloadSuccess(path: String) {
-                            Logger.d("下载主题完成")
-                            val msg = handler.obtainMessage()
-                            msg.what = 0
-                            msg.obj = path
-                            handler.sendMessage(msg)
-                        }
-
-                        override fun downloadError() {
-                            Logger.d("下载主题出错")
-                            handler.sendEmptyMessage(1)
-                        }
-                    })
-            } catch (e: Exception) {
-                e.printStackTrace()
-                Logger.d("现在线程终止")
-                handler.sendEmptyMessage(1)
-            }
-        })
-        downloadThread.start()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        handler.removeCallbacks(null)
-
-        try {
-            if (downloadThread != null) {
-                downloadThread.interrupt()
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
     }
 
     override fun onActivityResult(
@@ -184,6 +109,7 @@ class ShowActivity : AppCompatActivity() {
         if (requestCode == MainActivity.REQUEST_LIVE_PAPER) {
             if (isLiveWallpaperChanged()) { // 记录到数据库,更新当前的Service
                 Logger.d("修改壁纸成功")
+                Toast.makeText(this,"success",Toast.LENGTH_SHORT).show()
                 SharedPreTool.getInstance().putString(SharedPreTool.CURRENT_SERVICE, currentService)
             }
         }

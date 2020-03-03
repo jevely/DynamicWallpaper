@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.service.wallpaper.WallpaperService;
 import android.view.SurfaceHolder;
 
@@ -15,6 +16,7 @@ import com.flash.light.free.good.fashioncallflash.util.SharedPreTool;
 import com.free.good.dynamicwallpaper.activity.MainActivity;
 import com.free.good.dynamicwallpaper.db.DataBaseTool;
 import com.free.good.dynamicwallpaper.db.ThemeContent;
+import com.free.good.dynamicwallpaper.util.ResourceUtil;
 
 import java.io.IOException;
 
@@ -118,7 +120,8 @@ public class VideoLiveWallpaper2 extends WallpaperService {
         private void play() {
             try {
                 ThemeContent content = DataBaseTool.Companion.getInstance().find(SharedPreTool.Companion.getInstance().getString(SharedPreTool.SELECT_THEME));
-                mMediaPlayer.setDataSource(content.getPath());
+                mMediaPlayer.setDataSource(getApplicationContext(), Uri.parse("android.resource://" + getApplicationContext().getPackageName() + "/" +
+                        ResourceUtil.INSTANCE.getRaw(getApplicationContext(), content.getVideo_name())));
                 mMediaPlayer.setLooping(true);
                 mMediaPlayer.setVolume(0, 0);
                 mMediaPlayer.prepare();
