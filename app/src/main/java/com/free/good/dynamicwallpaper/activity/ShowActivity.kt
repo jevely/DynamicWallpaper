@@ -108,7 +108,6 @@ class ShowActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == MainActivity.REQUEST_LIVE_PAPER) {
             if (isLiveWallpaperChanged()) { // 记录到数据库,更新当前的Service
-                Logger.d("修改壁纸成功")
                 Toast.makeText(this,"success",Toast.LENGTH_SHORT).show()
                 SharedPreTool.getInstance().putString(SharedPreTool.CURRENT_SERVICE, currentService)
             }
