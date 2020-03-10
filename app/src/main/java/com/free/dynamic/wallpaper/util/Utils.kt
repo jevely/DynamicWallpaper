@@ -10,14 +10,13 @@ import android.graphics.BitmapFactory
 import android.graphics.Point
 import android.net.Uri
 import android.os.Build
-import android.os.Environment
 import android.os.PowerManager
 import android.provider.Settings
 import android.view.KeyCharacterMap
 import android.view.KeyEvent
 import android.view.ViewConfiguration
-import com.free.good.dynamicwallpaper.DynamicApplication
-import com.free.good.dynamicwallpaper.view.WhiteDialog
+import com.free.dynamic.wallpaper.DynamicApplication
+import com.free.dynamic.wallpaper.view.WhiteDialog
 import java.io.File
 
 

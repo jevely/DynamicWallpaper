@@ -1,4 +1,4 @@
-package com.free.good.dynamicwallpaper.db
+package com.free.dynamic.wallpaper.db
 
 import android.content.Context
 import androidx.room.Room

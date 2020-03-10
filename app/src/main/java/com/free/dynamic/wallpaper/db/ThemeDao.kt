@@ -1,7 +1,6 @@
-package com.free.good.dynamicwallpaper.db
+package com.free.dynamic.wallpaper.db
 
 import androidx.room.*
-import com.free.good.dynamicwallpaper.db.ThemeContent
 
 @Dao
 interface ThemeDao {

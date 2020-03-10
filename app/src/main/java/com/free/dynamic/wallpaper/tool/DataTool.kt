@@ -1,8 +1,8 @@
-package com.free.good.dynamicwallpaper.tool
+package com.free.dynamic.wallpaper.tool
 
-import com.free.good.dynamicwallpaper.R
-import com.free.good.dynamicwallpaper.db.DataBaseTool
-import com.free.good.dynamicwallpaper.db.ThemeContent
+import com.free.dynamic.wallpaper.R
+import com.free.dynamic.wallpaper.db.DataBaseTool
+import com.free.dynamic.wallpaper.db.ThemeContent
 import java.util.*
 
 class DataTool {

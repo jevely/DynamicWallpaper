@@ -1,11 +1,11 @@
-package com.free.good.dynamicwallpaper.util;
+package com.free.dynamic.wallpaper.util;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.Log;
 
-import com.free.good.dynamicwallpaper.DynamicApplication;
+import com.free.dynamic.wallpaper.DynamicApplication;
 
 
 /**

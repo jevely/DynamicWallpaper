@@ -1,4 +1,4 @@
-package com.free.good.dynamicwallpaper.activity
+package com.free.dynamic.wallpaper.activity
 
 import android.animation.Animator
 import android.animation.AnimatorSet
@@ -9,8 +9,8 @@ import android.os.Handler
 import android.view.KeyEvent
 import android.widget.ImageView
 import android.widget.TextView
-import com.free.good.dynamicwallpaper.BaseActivity
-import com.free.good.dynamicwallpaper.R
+import com.free.dynamic.wallpaper.BaseActivity
+import com.free.dynamic.wallpaper.R
 
 class SplashActivity : BaseActivity() {
 

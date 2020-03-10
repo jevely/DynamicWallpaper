@@ -1,9 +1,7 @@
-package com.free.good.dynamicwallpaper.db
+package com.free.dynamic.wallpaper.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.free.good.dynamicwallpaper.db.ThemeContent
-import com.free.good.dynamicwallpaper.db.ThemeDao
 
 @Database(entities = [ThemeContent::class], version = 1)
 abstract class ThemeDataBase : RoomDatabase() {

@@ -1,4 +1,4 @@
-package com.free.good.dynamicwallpaper.view;
+package com.free.dynamic.wallpaper.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -16,8 +16,8 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 
-import com.free.good.dynamicwallpaper.R;
-import com.free.good.dynamicwallpaper.util.ResourceUtil;
+import com.free.dynamic.wallpaper.R;
+import com.free.dynamic.wallpaper.util.ResourceUtil;
 
 
 /**

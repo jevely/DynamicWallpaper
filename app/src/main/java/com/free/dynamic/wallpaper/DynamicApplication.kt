@@ -1,4 +1,4 @@
-package com.free.good.dynamicwallpaper
+package com.free.dynamic.wallpaper
 
 import android.app.ActivityManager
 import android.app.Application
@@ -6,8 +6,8 @@ import android.content.Context
 import android.os.Process
 import androidx.multidex.MultiDex
 import com.flash.light.free.good.fashioncallflash.util.SharedPreTool
-import com.free.good.dynamicwallpaper.db.DataBaseTool
-import com.free.good.dynamicwallpaper.tool.DataTool
+import com.free.dynamic.wallpaper.db.DataBaseTool
+import com.free.dynamic.wallpaper.tool.DataTool
 
 class DynamicApplication : Application() {
 

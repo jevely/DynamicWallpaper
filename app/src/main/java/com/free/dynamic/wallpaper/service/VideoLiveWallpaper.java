@@ -1,4 +1,4 @@
-package com.free.good.dynamicwallpaper.service;
+package com.free.dynamic.wallpaper.service;
 
 import android.app.Activity;
 import android.app.WallpaperManager;
@@ -10,20 +10,19 @@ import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.service.wallpaper.WallpaperService;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
 import com.flash.light.free.good.fashioncallflash.util.SharedPreTool;
-import com.free.good.dynamicwallpaper.activity.MainActivity;
-import com.free.good.dynamicwallpaper.db.DataBaseTool;
-import com.free.good.dynamicwallpaper.db.ThemeContent;
-import com.free.good.dynamicwallpaper.util.ResourceUtil;
+import com.free.dynamic.wallpaper.activity.MainActivity;
+import com.free.dynamic.wallpaper.db.DataBaseTool;
+import com.free.dynamic.wallpaper.db.ThemeContent;
+import com.free.dynamic.wallpaper.util.ResourceUtil;
 
-import java.io.IOException;
-
-public class VideoLiveWallpaper2 extends WallpaperService {
+public class VideoLiveWallpaper extends WallpaperService {
 
     public Engine onCreateEngine() {
-        return new VideoEngine2();
+        return new VideoEngine();
     }
 
     public static final String VIDEO_PARAMS_CONTROL_ACTION = "com.zhy.livewallpaper";
@@ -32,26 +31,27 @@ public class VideoLiveWallpaper2 extends WallpaperService {
     public static final int ACTION_VOICE_NORMAL = 111;
 
     public static void voiceSilence(Context context) {
-        Intent intent = new Intent(VideoLiveWallpaper2.VIDEO_PARAMS_CONTROL_ACTION);
-        intent.putExtra(VideoLiveWallpaper2.KEY_ACTION, VideoLiveWallpaper2.ACTION_VOICE_SILENCE);
+        Intent intent = new Intent(VideoLiveWallpaper.VIDEO_PARAMS_CONTROL_ACTION);
+        intent.putExtra(VideoLiveWallpaper.KEY_ACTION, VideoLiveWallpaper.ACTION_VOICE_SILENCE);
         context.sendBroadcast(intent);
     }
 
 
     public static void voiceNormal(Context context) {
-        Intent intent = new Intent(VideoLiveWallpaper2.VIDEO_PARAMS_CONTROL_ACTION);
-        intent.putExtra(VideoLiveWallpaper2.KEY_ACTION, VideoLiveWallpaper2.ACTION_VOICE_NORMAL);
+        Intent intent = new Intent(VideoLiveWallpaper.VIDEO_PARAMS_CONTROL_ACTION);
+        intent.putExtra(VideoLiveWallpaper.KEY_ACTION, VideoLiveWallpaper.ACTION_VOICE_NORMAL);
         context.sendBroadcast(intent);
     }
+
 
     public static void setToWallPaper(Activity context) {
         final Intent intent = new Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER);
         intent.putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT,
-                new ComponentName(context, VideoLiveWallpaper2.class));
+                new ComponentName(context, VideoLiveWallpaper.class));
         context.startActivityForResult(intent, MainActivity.REQUEST_LIVE_PAPER);
     }
 
-    class VideoEngine2 extends Engine {
+    class VideoEngine extends Engine {
 
         private MediaPlayer mMediaPlayer;
 
@@ -60,6 +60,7 @@ public class VideoLiveWallpaper2 extends WallpaperService {
         @Override
         public void onCreate(final SurfaceHolder surfaceHolder) {
             super.onCreate(surfaceHolder);
+            Log.e("LOG", "onCreate");
             IntentFilter intentFilter = new IntentFilter(VIDEO_PARAMS_CONTROL_ACTION);
             registerReceiver(mVideoParamsControlReceiver = new BroadcastReceiver() {
                 @Override
@@ -88,6 +89,7 @@ public class VideoLiveWallpaper2 extends WallpaperService {
 
         @Override
         public void onVisibilityChanged(boolean visible) {
+            Log.e("LOG", "onVisibilityChanged");
             if (visible) {
                 mMediaPlayer.start();
             } else {
@@ -99,6 +101,7 @@ public class VideoLiveWallpaper2 extends WallpaperService {
         @Override
         public void onSurfaceCreated(SurfaceHolder holder) {
             super.onSurfaceCreated(holder);
+            Log.e("LOG", "onSurfaceCreated");
             mMediaPlayer = new MediaPlayer();
             mMediaPlayer.setSurface(holder.getSurface());
             play();
@@ -107,11 +110,13 @@ public class VideoLiveWallpaper2 extends WallpaperService {
         @Override
         public void onSurfaceChanged(SurfaceHolder holder, int format, int width, int height) {
             super.onSurfaceChanged(holder, format, width, height);
+            Log.e("LOG", "onSurfaceChanged");
         }
 
         @Override
         public void onSurfaceDestroyed(SurfaceHolder holder) {
             super.onSurfaceDestroyed(holder);
+            Log.e("LOG", "onSurfaceDestroyed");
             mMediaPlayer.release();
             mMediaPlayer = null;
 

@@ -1,4 +1,4 @@
-package com.free.good.dynamicwallpaper.view;
+package com.free.dynamic.wallpaper.view;
 
 import android.content.Context;
 import android.util.AttributeSet;

@@ -13,7 +13,7 @@
         android:visibility="gone" />
 
     <!--video-->
-    <com.free.good.dynamicwallpaper.view.NewVideoView
+    <com.free.dynamic.wallpaper.view.NewVideoView
         android:id="@+id/call_theme_back_video"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

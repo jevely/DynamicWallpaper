@@ -1,4 +1,4 @@
-package com.free.good.dynamicwallpaper.adapter
+package com.free.dynamic.wallpaper.adapter
 
 import android.content.Intent
 import android.graphics.drawable.Drawable
@@ -17,13 +17,13 @@ import com.facebook.ads.AdOptionsView
 import com.facebook.ads.MediaView
 import com.facebook.ads.NativeAdLayout
 import com.flash.light.free.good.fashioncallflash.util.getScreen
-import com.free.good.dynamicwallpaper.DynamicApplication
-import com.free.good.dynamicwallpaper.R
-import com.free.good.dynamicwallpaper.activity.ShowActivity
-import com.free.good.dynamicwallpaper.db.ThemeContent
-import com.free.good.dynamicwallpaper.tool.DataTool
-import com.free.good.dynamicwallpaper.util.DeviceUtils
-import com.free.good.dynamicwallpaper.util.Logger
+import com.free.dynamic.wallpaper.DynamicApplication
+import com.free.dynamic.wallpaper.R
+import com.free.dynamic.wallpaper.activity.ContentActivity
+import com.free.dynamic.wallpaper.db.ThemeContent
+import com.free.dynamic.wallpaper.tool.DataTool
+import com.free.dynamic.wallpaper.util.DeviceUtils
+import com.free.dynamic.wallpaper.util.Logger
 
 class MainAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -222,7 +222,7 @@ class MainAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 .into(main_background)
 
             main_re.setOnClickListener {
-                val intent = Intent(DynamicApplication.getContext(), ShowActivity::class.java)
+                val intent = Intent(DynamicApplication.getContext(), ContentActivity::class.java)
                 intent.putExtra("position", position)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 DynamicApplication.getContext().startActivity(intent)

@@ -1,4 +1,4 @@
-package com.free.good.dynamicwallpaper.util
+package com.free.dynamic.wallpaper.util
 
 import android.content.Context
 

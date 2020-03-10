@@ -1,4 +1,4 @@
-package com.free.good.dynamicwallpaper.view;
+package com.free.dynamic.wallpaper.view;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -8,7 +8,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.flash.light.free.good.fashioncallflash.util.UtilsKt;
-import com.free.good.dynamicwallpaper.R;
+import com.free.dynamic.wallpaper.R;
 
 /**
  * 设置省电模式
