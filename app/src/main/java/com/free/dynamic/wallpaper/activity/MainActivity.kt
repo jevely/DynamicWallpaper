@@ -1,6 +1,5 @@
 package com.free.dynamic.wallpaper.activity
 
-import android.R.attr
 import android.app.Activity
 import android.content.Intent
 import android.database.Cursor
